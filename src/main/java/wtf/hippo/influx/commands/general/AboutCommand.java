@@ -2,10 +2,7 @@ package wtf.hippo.influx.commands.general;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.MessageEmbed;
-import net.dv8tion.jda.api.entities.Role;
-import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
@@ -159,7 +156,7 @@ public class AboutCommand extends BaseCommand implements InteractionCommand {
 
                 about.addField("**Roles**", roles.toString(), false);
 
-                about.addField("**Join date**", "I joined this server at `" + member.getTimeJoined().format(DateTimeFormatter.RFC_1123_DATE_TIME) + "`", true);
+                about.addField("**Join date**", "The user joined this server at `" + member.getTimeJoined().format(DateTimeFormatter.RFC_1123_DATE_TIME) + "`", true);
                 about.addField("**Account creation**", "This account was made at `" + user.getTimeCreated().format(DateTimeFormatter.RFC_1123_DATE_TIME) + "`", true);
 
 
@@ -167,6 +164,43 @@ public class AboutCommand extends BaseCommand implements InteractionCommand {
                 return;
 
             }
+        }
+        if(event.getSubcommandName().equals("server")) {
+
+            Guild guild = event.getGuild();
+
+            assert guild != null;
+
+            EmbedBuilder about = new EmbedBuilder()
+                    .setColor(Color.decode("#5865F2"))
+                    .setFooter("Requested by " + event.getUser().getName(), event.getUser().getAvatarUrl())
+                    .setTimestamp(LocalDateTime.now())
+                    .setThumbnail(guild.getIconUrl());
+
+            StringBuilder roles = new StringBuilder();
+            for (Role role : guild.getRoles()) {
+                roles.append(role.getName())
+                        .append(", ");
+            }
+
+            about.addField("**Name**", guild.getName(), true);
+            about.addField("**Server id**", guild.getId(), true);
+
+            about.addField("**Owner**", "<@" + guild.getOwnerId() + ">", true);
+            about.addField("**Channels**",
+                    "📝 Text channels: " + guild.getTextChannels().size()
+                    + "\n" + "🔊 Voice channels: " + guild.getVoiceChannels().size() + "\n"
+                    + "Total channels: " + (guild.getTextChannels().size() + guild.getVoiceChannels().size()),
+                    true);
+            about.addField("**Member count**", String.valueOf(guild.getMemberCount()), true);
+
+
+            about.addField("**Roles**", roles.toString().substring(0, roles.length() - 2), false);
+
+            about.addField("**Creation date**", "This server was made at `" + guild.getTimeCreated().format(DateTimeFormatter.RFC_1123_DATE_TIME) + "`", true);
+
+            event.getHook().sendMessageEmbeds(about.build()).queue();
+            return;
         }
     }
 
