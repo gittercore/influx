@@ -12,7 +12,6 @@ on:
 jobs:
 
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -41,7 +40,7 @@ jobs:
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-          tag_name: ${{build.outputs.version_tag}}
+          tag_name: v1.0.${{env.GITHUB_RUN_NUMBER}}
           release_name: Release 1.0.${{env.GITHUB_RUN_NUMBER}}
           draft: false
           prerelease: false
