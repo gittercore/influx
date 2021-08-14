@@ -1,2 +1,2 @@
-# influx
+# Influx
 Influx bot by gitter
