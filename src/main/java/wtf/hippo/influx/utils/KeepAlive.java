@@ -24,12 +24,12 @@ public class KeepAlive {
         Thread thread1 = new Thread() {
             public void run() {
                 try {
-                    Process process = Runtime.getRuntime().exec("node " + System.getProperty("user.dir") + "/src/main/java/wtf/hippo/copper/utils/keepalive.js");
+                    Process process = Runtime.getRuntime().exec("node " + System.getProperty("user.dir") + "/src/main/java/wtf/hippo/influx/utils/keepalive.js");
                     printResults(process);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                File file = new File(System.getProperty("user.dir") + "/src/main/java/wtf/hippo/copper/utils/keepalive.js");
+                File file = new File(System.getProperty("user.dir") + "/src/main/java/wtf/hippo/influx/utils/keepalive.js");
                 if(file.exists()) {
                     System.out.println("finally");
                 } else{
