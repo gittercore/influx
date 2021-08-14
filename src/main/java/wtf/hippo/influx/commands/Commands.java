@@ -8,6 +8,7 @@ import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import org.jetbrains.annotations.NotNull;
 import wtf.hippo.influx.commands.general.AboutCommand;
 import wtf.hippo.influx.commands.general.HelpCommand;
+import wtf.hippo.influx.commands.general.InviteCommand;
 import wtf.hippo.influx.commands.moderation.PurgeCommand;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class Commands extends ListenerAdapter {
         this.commands.add(new HelpCommand());
         this.commands.add(new AboutCommand());
         this.commands.add(new PurgeCommand());
+        this.commands.add(new InviteCommand());
     }
 
     @Override
@@ -30,6 +32,7 @@ public class Commands extends ListenerAdapter {
         if (name.equals("help")) HelpCommand.onCommand(event, this.commands);
         if (name.equals("about")) AboutCommand.onCommand(event);
         if (name.equals("purge")) PurgeCommand.onCommand(event);
+        if (name.equals("invite")) InviteCommand.onCommand(event);
         //Development command is handled in here
         if (name.equals("development")) {
             if (event.getUser().getId().equals("665488298533322762"))
