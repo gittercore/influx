@@ -37,7 +37,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
                     <excludes>
-                        <exclude>**/wtf/hippo/copper/utils/keepalive.js</exclude>
+                        <exclude>**/wtf/hippo/influx/utils/keepalive.js</exclude>
                     </excludes>
                 </configuration>
             </plugin>
