@@ -19,7 +19,7 @@ public class Main extends ListenerAdapter {
         Dotenv dotenv = Dotenv.load();
         String token = dotenv.get("TOKEN");
         assert token != null;
-        KeepAlive.run()
+        KeepAlive.run();
         JDA bot = JDABuilder.createLight(token, GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES)
                 .setActivity(Activity.watching("the chats go by"))
                 .setStatus(OnlineStatus.IDLE)
