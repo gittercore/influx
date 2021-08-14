@@ -4,8 +4,6 @@ import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.dv8tion.jda.api.interactions.commands.build.CommandData;
-import org.jetbrains.annotations.NotNull;
 import wtf.hippo.influx.commands.general.AboutCommand;
 import wtf.hippo.influx.commands.general.HelpCommand;
 import wtf.hippo.influx.commands.general.InviteCommand;
@@ -16,20 +14,24 @@ import java.util.List;
 
 public class Commands extends ListenerAdapter {
 
-    private final List<BaseCommand> commands;
+    private final List<BaseCommand> generalCommands;
+    private final List<BaseCommand> modCommands;
 
     public Commands() {
-        this.commands = new ArrayList<>();
-        this.commands.add(new HelpCommand());
-        this.commands.add(new AboutCommand());
-        this.commands.add(new PurgeCommand());
-        this.commands.add(new InviteCommand());
+
+        this.generalCommands = new ArrayList<>();
+        this.modCommands = new ArrayList<>();
+
+        this.generalCommands.add(new HelpCommand());
+        this.generalCommands.add(new AboutCommand());
+        this.modCommands.add(new PurgeCommand());
+        this.generalCommands.add(new InviteCommand());
     }
 
     @Override
     public void onSlashCommand(SlashCommandEvent event) {
         String name = event.getName();
-        if (name.equals("help")) HelpCommand.onCommand(event, this.commands);
+        if (name.equals("help")) HelpCommand.onCommand(event, this.generalCommands, this.modCommands);
         if (name.equals("about")) AboutCommand.onCommand(event);
         if (name.equals("purge")) PurgeCommand.onCommand(event);
         if (name.equals("invite")) InviteCommand.onCommand(event);
@@ -51,7 +53,7 @@ public class Commands extends ListenerAdapter {
                 event.getGuild().updateCommands().queue();
                 event.getGuild().upsertCommand("development", "Information about gitter development").queue();
 
-                for (BaseCommand command : this.commands) {
+                for (BaseCommand command : this.generalCommands) {
                     event.getGuild().upsertCommand(command.commandData).queue();
                 }
 
