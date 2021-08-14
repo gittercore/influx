@@ -141,8 +141,8 @@ public class AboutCommand extends BaseCommand implements InteractionCommand {
                 about.addField("**User id**", user.getId(), true);
 
                 try {
-                    if (!event.getGuild().getMember(user).getNickname().equals(null)) {
-                        about.addField("**Nickname**", event.getGuild().getMember(user).getNickname(), true);
+                    if (!member.getNickname().equals(null)) {
+                        about.addField("**Nickname**", member.getNickname(), true);
                     }
                 } catch (NullPointerException e) {
                     about.addField("**Nickname**", "None yet..", true);
