@@ -20,7 +20,7 @@ public class KeepAlive {
         }
     }
 
-    public void run() throws IOException {
+    public static void run() throws IOException {
         Thread thread1 = new Thread() {
             public void run() {
                 try {
