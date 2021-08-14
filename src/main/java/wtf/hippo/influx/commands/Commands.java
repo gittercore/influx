@@ -14,7 +14,7 @@ public class Commands extends ListenerAdapter {
     private List<BaseCommand> commands;
 
     public Commands() {
-        this.commands = new ArrayList<BaseCommand>();
+        this.commands = new ArrayList<>();
         this.commands.add(new HelpCommand());
     }
 
