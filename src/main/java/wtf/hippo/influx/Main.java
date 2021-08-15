@@ -9,6 +9,7 @@ import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import wtf.hippo.influx.commands.Commands;
+import wtf.hippo.influx.logging.EventHandler;
 import wtf.hippo.influx.utils.KeepAlive;
 
 import javax.security.auth.login.LoginException;
@@ -24,6 +25,7 @@ public class Main extends ListenerAdapter {
                 .setActivity(Activity.watching("the chats go by"))
                 .setStatus(OnlineStatus.IDLE)
                 .addEventListeners(new Commands())
+                .addEventListeners(new EventHandler())
                 .build();
         System.out.println(bot.getSelfUser().getName());
     }
