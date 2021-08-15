@@ -1,12 +1,15 @@
 package wtf.hippo.influx.commands;
 
 import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import wtf.hippo.influx.commands.general.AboutCommand;
 import wtf.hippo.influx.commands.general.HelpCommand;
 import wtf.hippo.influx.commands.general.InviteCommand;
+import wtf.hippo.influx.commands.moderation.BanCommand;
+import wtf.hippo.influx.commands.moderation.KickCommand;
 import wtf.hippo.influx.commands.moderation.PurgeCommand;
 
 import java.util.ArrayList;
@@ -24,8 +27,11 @@ public class Commands extends ListenerAdapter {
 
         this.generalCommands.add(new HelpCommand());
         this.generalCommands.add(new AboutCommand());
-        this.modCommands.add(new PurgeCommand());
         this.generalCommands.add(new InviteCommand());
+
+        this.modCommands.add(new PurgeCommand());
+        this.modCommands.add(new BanCommand());
+        this.modCommands.add(new KickCommand());
     }
 
     @Override
@@ -35,6 +41,8 @@ public class Commands extends ListenerAdapter {
         if (name.equals("about")) AboutCommand.onCommand(event);
         if (name.equals("purge")) PurgeCommand.onCommand(event);
         if (name.equals("invite")) InviteCommand.onCommand(event);
+        if (name.equals("ban")) BanCommand.onCommand(event);
+        if (name.equals("kick")) KickCommand.onCommand(event);
         //Development command is handled in here
         if (name.equals("development")) {
             if (event.getUser().getId().equals("665488298533322762"))
@@ -53,9 +61,8 @@ public class Commands extends ListenerAdapter {
                 event.getGuild().updateCommands().queue();
                 event.getGuild().upsertCommand("development", "Information about gitter development").queue();
 
-                for (BaseCommand command : this.generalCommands) {
-                    event.getGuild().upsertCommand(command.commandData).queue();
-                }
+                for (BaseCommand command : this.generalCommands) event.getGuild().upsertCommand(command.commandData).queue();
+                for (BaseCommand command : this.modCommands) event.getGuild().upsertCommand(command.commandData).queue();
 
                 event.getMessage().reply("All done! The commands have been updated").queue();
 
