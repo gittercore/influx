@@ -17,11 +17,13 @@ import java.util.List;
 
 public class Commands extends ListenerAdapter {
 
+    private final List<BaseCommand> commands;
     private final List<BaseCommand> generalCommands;
     private final List<BaseCommand> modCommands;
 
     public Commands() {
 
+        this.commands = new ArrayList<>();
         this.generalCommands = new ArrayList<>();
         this.modCommands = new ArrayList<>();
 
@@ -32,6 +34,13 @@ public class Commands extends ListenerAdapter {
         this.modCommands.add(new PurgeCommand());
         this.modCommands.add(new BanCommand());
         this.modCommands.add(new KickCommand());
+
+        this.commands.add(new HelpCommand());
+        this.commands.add(new AboutCommand());
+        this.commands.add(new InviteCommand());
+        this.commands.add(new PurgeCommand());
+        this.commands.add(new BanCommand());
+        this.commands.add(new KickCommand());
     }
 
     @Override
@@ -59,13 +68,12 @@ public class Commands extends ListenerAdapter {
 
                 //Register commands per guild before pushing to global
                 event.getGuild().updateCommands().queue();
-                event.getGuild().upsertCommand("development", "Information about gitter development").queue();
+                event.getGuild().upsertCommand("developement", "Information about gitter development").queue();
 
-                for (BaseCommand command : this.generalCommands) event.getGuild().upsertCommand(command.commandData).queue();
-                for (BaseCommand command : this.modCommands) event.getGuild().upsertCommand(command.commandData).queue();
-
-                event.getMessage().reply("All done! The commands have been updated").queue();
-
+                for (BaseCommand command : this.commands) {
+                    event.getGuild().upsertCommand(command.commandData).queue();
+                }
+                event.getMessage().reply("This could talk a few seconds, but I'm updating your commands").queue();
             } else {
                 event.getMessage().reply("Looks like you don't have the `MANAGE_SERVER` permission!").queue();
             }
