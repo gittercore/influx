@@ -1,21 +1,22 @@
 package wtf.hippo.influx.logging;
 
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.User;
 
 import java.util.Date;
 
 public class Event {
-    public Member member;
+    public User member;
     public long time;
     public String action;
 
-    public Event(Member member, long time, String action) {
+    public Event(User member, long time, String action) {
         this.action = action;
         this.time = time;
         this.member = member;
     }
 
-    public Member getMember() {
+    public User getUser() {
         return member;
     }
 

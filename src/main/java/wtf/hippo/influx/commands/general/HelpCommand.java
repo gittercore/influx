@@ -2,6 +2,7 @@ package wtf.hippo.influx.commands.general;
 
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
+import wtf.hippo.influx.InfluxUtils;
 import wtf.hippo.influx.commands.BaseCommand;
 import wtf.hippo.influx.commands.InteractionCommand;
 import wtf.hippo.influx.commands.utils.HelpUtils;
